@@ -1,0 +1,197 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+	{{ cours.titre }}
+{% endblock %}
+
+{% block body %}
+	{% if cours.approved == false %}
+		<div class="container p-2 mb-4">
+			<h1 class="my-5">{{ cours.titre }}
+				n'a pas encore été approuvé</h1>
+			<h5>Merci de patienter pendant que l'administration vérifie son contenu.</h5>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+		</div>
+	{% else %}
+		<div class="container p-2 mb-4">
+			<h1>{{ cours.titre }}</h1>
+			<p class="mt-4">Catégorie:
+				<strong>{{ cours.cathegorie }}</strong>
+			</p>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-7 mb-3">
+					<div class="row justify-content-center">
+						{% if cours.mimeType == 'video/mp4' %}
+							<video src="{{ asset('/uploads/images')}}/{{ cours.coverImage }}" controls autoplay class="mb-3"></video>
+						{% elseif cours.mimeType == 'image/jpeg' or cours.mimeType == 'image/png' %}
+							<img src="{{ asset('/uploads/images')}}/{{ cours.coverImage }}" class="h-50 w-50 mb-4">
+						{% endif %}
+					</div>
+					<div class="row">
+						<ul class="nav nav-tabs" role="tablist">
+							<li class="nav-item" role="presentation">
+								<a class="nav-link active" data-bs-toggle="tab" href="#description" aria-selected="true" role="tab">Description</a>
+							</li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link" data-bs-toggle="tab" href="#criteres" aria-selected="false" role="tab" tabindex="-1">Critères</a>
+							</li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link" data-bs-toggle="tab" href="#modules" aria-selected="false" role="tab" tabindex="-1">Modules</a>
+							</li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link" data-bs-toggle="tab" href="#quiz" aria-selected="false" role="tab" tabindex="-1">Quiz</a>
+							</li>
+							<li class="nav-item" role="presentation">
+								<a class="nav-link" data-bs-toggle="tab" href="#examen" aria-selected="false" role="tab" tabindex="-1">Examen</a>
+							</li>
+						</ul>
+						<div id="myTabContent" class="tab-content">
+							<div class="tab-pane fade active show" id="description" role="tabpanel">
+								<p class="mt-3">{{ cours.description }}</p>
+							</div>
+							<div class="tab-pane fade" id="criteres" role="tabpanel">
+								{% if cours.criteres|length > 0 %}
+									{% for critere in cours.criteres %}
+										<ul class="m-2">
+											<li>{{ critere.libelle }}</li>
+										</ul>
+									{% endfor %}
+								{% else %}
+									<p class="text-center mt-3">Aucun critère pour le moment</p>
+								{% endif %}
+							</div>
+							<div class="tab-pane fade mt-3" id="modules" role="tabpanel">
+								{% if cours.modules|length >0 %}
+									{% for module in cours.modules %}
+										{% if module.approved == false %}
+											<div class="card mb-3">
+												<div class="card-body">
+													Ce module n'a pas encore été approuvé. Merci de patienter pendant que l'administration vérifie son contenu.
+												</div>
+											</div>
+										{% else %}
+											<div class="card mb-3">
+												<div class="card-body">
+													<h5 class="card-title">{{ module.libelle }}</h5>
+													<p class="card-text">{{ module.description }}</p>
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									<p class="text-center mt-3">Aucun module pour le moment</p>
+								{% endif %}
+                                <div class="container text-center">
+                                    <a href="{{ path('module_index', {'slug': cours.slug}) }}" class="btn-pc">
+                                        <i class="fa-sharp fa-solid fa-eye"></i>
+                                    </a>
+                                </div>
+							</div>
+							<div class="tab-pane fade mt-3" id="quiz" role="tabpanel">
+								{% if cours.quizz|length >0 %}
+									{% for quiz in cours.quizz %}
+										{% if quiz.approved == false %}
+											<div class="card mb-3">
+												<div class="card-body">
+													Ce quiz n'a pas encore été approuvé. Merci de patienter pendant que l'administration vérifie son contenu.
+												</div>
+											</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+									<p class="text-center mt-3">Aucun quiz pour le moment</p>
+								{% endif %}
+                                <div class="container text-center">
+                                    {% if cours.quizz|length >0 %}
+                                        {% for quiz in cours.quizz %}
+                                        	<a href="{{ path('quiz_do', {'id':quiz.id}) }}" class="btn-pc">Faire un exercice</a><br><br>
+										{% endfor %}
+                                    {% endif %}
+                                </div>
+							</div>
+							{% if cours.examen is not empty %}
+								{% if cours.examen.approved == false %}
+									<div class="tab-pane fade text-center mt-3" id="examen" role="tabpanel">
+										<div class="card mb-3">
+											<div class="card-body">
+												Cet examen n'a pas encore été approuvé. Merci de patienter pendant que l'administration vérifie son contenu.
+											</div>
+										</div>
+									</div>
+								{% else %}
+									<div class="tab-pane fade text-center mt-3" id="examen" role="tabpanel">
+										{% if cours.examen.paymentOfUser(app.user) == null %}
+											<a class="text-decoration-none" href="{{ path('paiement_examen', {'id': cours.examen.id}) }}">Passer un examen pour être certifié</a>
+										{% else %}
+											<a href="{{ path('Exam_do', {'id': cours.examen.id}) }}">Passer l'examen</a>
+										{% endif %}
+									</div>
+								{% endif %}
+							{% else %}
+								<p class="text-center mt-3">Aucun examen pour le moment</p>
+							{% endif %}
+                        </div>
+					</div>
+				</div>
+				<div class="col">
+					{% set a = cours.auteur %}
+					{% set url= path('compte', {'id': a.id}) %}
+					<div class="row">
+						<div class="col-3">
+							<a href="{{ url }}">
+								<img src="{{ asset('/uploads/avatars')}}/{{ a.avatar }}" alt="Avatar de {{ a.fullName }}" class="avatar avatar-meduim">
+							</a>
+						</div>
+						<div class="col">
+							<a href="{{ url }}" class="text-decoration-none">
+								<h3>{{ a.fullName }}</h3>
+							</a>
+							<span class="badge bg-primary p-2">{{ a.cours | length }}
+								cours</span>
+						</div>
+					</div>
+
+					<hr>
+
+					<div class="row border rounded mb-3 py-3 px-3">
+						{% set comment = cours.commentFromAuthor(app.user) %}
+						{% if comment is not null %}
+							<div class="col-10">
+								<blockquote>
+									{{ comment.contenu }}
+								</blockquote>
+
+								<strong>Note: </strong> {% include 'partials/rating.html.twig' with {'rating': comment.rating} %}
+							</div>
+							<div class="col-2 mt-3">
+								<a href="{{ path('comment_edit', {'id': comment.id, 'slug': cours.slug}) }}" class="text-decoration-none">
+									<i class="fa-sharp fa-solid fa-pen-to-square"></i>
+								</a>
+								<a href="{{ path('comment_delete', {'slug': cours.slug, 'id': comment.id}) }}" class="text-decoration-none" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ comment.id }}">
+									<i class="fa-sharp fa-solid fa-trash-can"></i>
+								</a>
+								{% include '/modals/deleteComment.html' %}
+							</div>
+						{% else %}
+                        <h4>Votre avis compte !</h4>
+							{{ form_start(form) }}
+								{{ form_widget(form) }}
+								<button type="submit" class="btn btn-primary">Confirmer</button>
+							{{ form_end(form) }}
+						{% endif %}
+                    </div>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/js/video.js"></script>
+{% endblock %}

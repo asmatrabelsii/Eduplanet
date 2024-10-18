@@ -1,0 +1,51 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des commentaires
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid" style="width:90%">
+		<h1 class="mt-5 mb-3 mx-4">Gestion des commentaires</h1>
+		<table class="table table-hover">
+		{% include 'admin/partials/_search_data.html.twig' with {form: form} only %}
+			<thead>
+				<tr>
+					<th>Date de création</th>
+					<th>Auteur</th>
+					<th>Contenu</th>
+					<th>Note</th>
+					<th>Cours</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for comment in comments %}
+					<tr>
+						<td>{{ comment.createdAt|date('d/m/Y H:i') }}</td>
+						<td>
+							<img src="{{ asset('/uploads/avatars')}}/{{ comment.auteur.avatar }}" alt="Avatar de {{ comment.auteur.fullName }}" class="avatar avatar-micro me-1">
+							{{ comment.auteur.fullName }}
+						</td>
+						<td>{{ comment.contenu }}</td>
+						<td>
+							<span class="badge bg-dark">{{ comment.rating }}</span>
+						</td>
+						<td>{{ comment.cours.titre }}</td>
+						<td>
+							<a href="{{ path('admin_comment_edit', {'id': comment.id}) }}" class="btn btn-primary">
+								<i class="fa-sharp fa-solid fa-pen-to-square"></i>
+							</a>
+							<a href="{{ path('admin_comment_delete', {'id': comment.id}) }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ comment.id }}">
+								<i class="fa-sharp fa-solid fa-trash-can"></i>
+							</a>
+							{% include 'admin/modals/deleteComment.html' %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="navigation flex justify-center my-4">
+			{{ knp_pagination_render(comments) }}
+		</div>
+	</div>
+{% endblock %}

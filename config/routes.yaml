@@ -1,0 +1,13 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation
+certification_download:
+    path: '/certification/{id}/download'
+    controller: App\Controller\ExamenController::downloadCertification
+    methods: ['GET']
+    requirements:
+        id: '\d+'

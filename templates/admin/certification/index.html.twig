@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des certifications
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid" style="width:90%">
+		<h1 class="mt-5 mb-3 mx-4">Liste des certifications</h1>
+		<table class="table table-hover">
+		{% include 'admin/partials/_search_data.html.twig' with {form: form} only %}
+			<thead>
+				<tr>
+					<th>Utilisateur</th>
+					<th>Cours</th>
+					<th>Certifié</th>
+					<th>Date d'achat</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for certification in certifications %}
+					<tr>
+						<td>
+							<img src="{{ asset('/uploads/avatars')}}/{{ certification.user.avatar }}" alt="Avatar de {{ certification.user.fullName }}" class="avatar avatar-micro me-1">
+							{{ certification.user.fullName }}
+						</td>
+						<td>{{ certification.exam.cours.titre }}</td>
+						<td>
+                            {% if certification.certification == true %} 
+							    <span class="badge bg-success">Oui</span>
+                            {% else %}
+                                <span class="badge bg-danger">Non</span>
+                            {% endif %}
+						</td>
+						<td>{{ certification.dateSession|date('d/m/Y') }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="navigation flex justify-center my-4">
+			{{ knp_pagination_render(certifications) }}
+		</div>
+	</div>
+{% endblock %}

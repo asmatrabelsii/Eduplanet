@@ -1,0 +1,77 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid" style="width:90%">
+		<h1 class="mt-5 mb-3 mx-4">Gestion des cours</h1>
+		<div class="my-3 mx-4">
+			{% include 'partials/_search_data.html.twig' with {form: form} only %}
+			<a href="{{ path('admin_cours_create') }}" class="btn-pc mx-3">
+				<i class="fas fa-plus"></i>Ajouter un cours
+			</a>
+		</div>
+		<table class="table table-hover text-center">
+			<thead>
+				<tr>
+					<th>Titre</th>
+					<th>Modules</th>
+					<th>Auteur</th>
+					<th>Catégorie</th>
+					<th>Prix</th>
+					<th>Note</th>
+					<th>Approuvé</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for course in courses %}
+					<tr>
+						<td>{{ course.titre }}</td>
+						<td>{{ course.modules | length }}</td>
+						<td>
+							<img src="{{ asset('/uploads/avatars')}}/{{ course.auteur.avatar }}" alt="Avatar de {{ course.auteur.fullName }}" class="avatar avatar-micro me-1">
+							{{ course.auteur.fullName }}
+						</td>
+						<td>{{ course.cathegorie }}</td>
+						<td>{{ course.prix | number_format(3,',',' ') }}
+							DT</td>
+						<td>
+							<span class="badge bg-primary p-2">{{ course.avgRatings |number_format("1", ",", " ") }}</span>
+						</td>
+						<td>
+							{% if course.approved %}
+								<a href="{{ path('admin_cours_disapprove', {'slug': course.slug}) }}" data-bs-toggle="modal" data-bs-target="#disapproveModal-{{ course.slug }}">
+									<span class="badge bg-success p-2">Oui</span>
+								</a>
+								{% include 'admin/modals/disapproveCours.html' %}
+							{% else %}
+								<a href="{{ path('admin_cours_approve', {'slug': course.slug}) }}" data-bs-toggle="modal" data-bs-target="#approveModal-{{ course.slug }}">
+									<span class="badge bg-danger p-2">Non</span>
+								</a>
+								{% include 'admin/modals/approveCours.html' %}
+							{% endif %}
+						</td>
+						<td>
+							<a href="{{ path('admin_cours_show', {'slug': course.slug}) }}" class="btn btn-info">
+								<i class="fa-sharp fa-solid fa-eye"></i>
+							</a>
+							<a href="{{ path('admin_cours_edit', {'slug': course.slug}) }}" class="btn btn-primary">
+								<i class="fa-sharp fa-solid fa-pen-to-square"></i>
+							</a>
+							<a href="{{ path('admin_cours_delete', {'slug': course.slug}) }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ course.slug }}">
+								<i class="fa-sharp fa-solid fa-trash-can"></i>
+							</a>
+							{% include 'admin/modals/deleteCours.html' %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="navigation flex justify-center my-4">
+			{{ knp_pagination_render(courses) }}
+		</div>
+	</div>
+{% endblock %}

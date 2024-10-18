@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container" style="width: 60%;">
+        <h1 class="my-5">Resultat de votre Quiz</h1>
+        <div class="alert alert-info">Votre score: {{ score }}</div>
+        <div>
+            <h4>Les réponses vraies sont:</h4>
+            {% for question in questions %}
+                <p>{{ question.enonce }}</p>
+                <p class="alert alert-success">{{ question.choix4 }}</p>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Panier
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid" style="width:80%">
+		<h1 class="mt-5 mb-3 mx-4">Votre panier</h1>
+		<table class="table text-center">
+			<thead>
+				<tr>
+					<th>Cours</th>
+					<th>Auteur</th>
+					<th>Prix</th>
+					<th>Payer</th>
+					<th>Annulation</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for cours in panier.cours %}
+					<tr>
+						<td>{{ cours.titre }}</td>
+						<td>
+							<img src="{{ asset('/uploads/avatars')}}/{{ cours.auteur.avatar }}" alt="Avatar de {{ cours.auteur.fullName }}" class="avatar avatar-micro me-1">
+							{{ cours.auteur.fullName }}
+						</td>
+						<td>{{ cours.prix | number_format(3,',',' ') }}
+							TND</td>
+						<td>
+							<form action="{{ path('paiement', {'id': cours.id}) }}" method="post">
+
+								<input type="hidden" name="amount" value="{{ cours.prix }}">
+								<input type="hidden" name="id" value="{{ cours.id }}">
+								
+								<button class="btn">
+									<span class="btn-pc">Paiement</span>
+								</button>
+							</form>
+						</td>
+						<td>
+							<a href="{{ path('cart_remove', {'id': cours.id}) }}" class="btn btn-danger">
+								<i class="fa-sharp fa-solid fa-xmark"></i>
+							</a>
+						</td>
+					</tr>
+				{% else %}
+					<tr>
+						<td colspan="5" class="text-center">Votre panier est vide</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan="2" class="text-end">Total</td>
+					<td>{{ total | number_format(3,',',' ') }}
+						TND</td>
+					<td colspan="2">
+						<a href="{{ path('cart_removeAll') }}" class="btn btn-danger">
+							Vider panier
+						</a>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+{% endblock %}

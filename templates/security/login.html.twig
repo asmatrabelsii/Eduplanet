@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<div class="container my-4 py-3">
+    <div class="row">
+        <div class="col-md-3">&nbsp;</div>
+        <div class="col-md-6">
+            <div class="bg-light px-3">
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <h2 class="card-title text-center"><i class="fa-sharp fa-solid fa-right-to-bracket"></i> Connectez vous</h2>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% if error %}
+                                <div class="alert alert-danger">Une erreur est survenue, l'email' ou le mot de passe est invalide ou votre compte est désactivé. Merci de contacter l'administrateur</div>
+                            {% endif %}
+
+                            {% if app.user %}
+                                <div class="mb-3">
+                                    Vous êtes connectés en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Déconnexion</a>
+                                </div>
+                            {% endif %}
+                            <div class="form-group mb-3">
+                                <label for="inputEmail">Email</label>
+                                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="inputPassword">Mot de passe</label>
+                                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                            </div>
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                            <div class="form-group">
+                                <button type ="submit" class="btn btn-primary">Se connecter</button> ou <a href="{{ path('app_forgot_password_request') }}" class="btn btn-link">Mot de passe oublié</a>
+                                <p>Vous n'avez pas de compte ? <a href="{{ path('app_register') }}" class="btn btn-link">Inscrivez-vous</a></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

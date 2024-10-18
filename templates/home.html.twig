@@ -1,0 +1,30 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	Bienvenue
+{% endblock %}
+
+{% block body %}
+	<div class="container pt-5">
+		<div class="conteneur mt-5 pb-1">
+			<div class="container">
+				<h1>Bienvenue sur Eduplanet</h1>
+				<h3 class="space">Votre solution efficace pour étudier en ligne</h3>
+				<a href="{{ path('app_login') }}" class="btn-pc">Commencez</a>
+			</div>
+			<div class="img-col"><img class="imgaccueil" src="/education.png" alt="OnlineCourse"></div>
+		</div>
+		<div class="conteneur mt-5 pb-1">
+			<div class="img-col"><img class="imgaccueil" src="/student.png" alt="Student"></div>
+			<div class="container">
+				<h4>Une plateforme e-learning où vous pouvez facilement trouver des cours pour améliorer votre niveau</h4>
+			</div>
+		</div>
+		<div class="conteneur mt-5 pb-1">
+			<div class="container">
+				<h3 class="space">Eduplanet vous offre un endroit pour publier vos cours où tous vos étudiants peuvent y accéder à tout moment</h3>
+				<a href="{{ path('app_login') }}" class="btn-pc">Ajouter un cours</a>
+			</div>
+			<div class="img-col"><img class="imgaccueil" src="/teacher.png" alt="Teacher"></div>
+		</div>
+	</div>
+{% endblock %}

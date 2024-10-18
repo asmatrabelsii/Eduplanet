@@ -1,0 +1,68 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+    Mon compte
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row align-items-center" style="margin-left: 100px">
+            <div class="col-3 text-center">
+                <img src="{{ asset('/uploads/avatars')}}/{{ utilisateur.avatar }}" alt="Avatar de {{ utilisateur.fullName }}" class="avatar-m mt-5">
+                <br>
+                {% if is_granted("ROLE_FORMATEUR") %}
+                    <span class="badge bg-primary p-2 mt-3">{{ utilisateur.cours | length }} cours</span>
+                {% endif %}
+            </div>
+            <div class="col-9">
+                <h1 class="mt-5">{{ utilisateur.fullName }}</h1>
+				<h6>Email:</h6>
+				<p>{{ utilisateur.email }}</p>
+                <h6>CIN:</h6>
+				<p>{{ utilisateur.cin }}</p>
+                {% if utilisateur is same as(app.user) %}
+                    <div class="my-3">
+                        <a href="{{ path('compte_admin_edit', {'id': utilisateur.id}) }}" class="btn-pc">Modifier mon profil</a>
+                        <a href="{{ path('password_admin_edit', {'id': utilisateur.id}) }}" class="btn-pc">Modifier mon mot de passe</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <br>
+        <hr>
+        <h6>Biographie : </h6>
+        <p>{{ utilisateur.biographie }}</p>
+        {% if is_granted("ROLE_FORMATEUR") %}
+            <hr>
+            <h2 class="text-center">Mes cours</h2>
+            {% if utilisateur.cours | length > 0 %}
+                <div class="row">
+                    {% for cours in utilisateur.cours %}
+                        <div class="card bg-light col-xs-12 col-sm-6 col-md-3 col-lg-2 flex-column align-items-center mt-2" style="margin-right: 10px; height:300px">
+                            <div class="card-header text-center w-100">
+                                <strong>{{ cours.titre }}</strong>
+                            </div>
+                            {% if cours.mimeType == 'video/mp4' %}
+                                <video src="{{ asset('/uploads/images')}}/{{ cours.coverImage }}" class="w-100" style="height: 48%;" controls></video>
+                            {% elseif cours.mimeType == 'image/jpeg' or cours.mimeType == 'image/png' %}
+                                <img src="{{ asset('/uploads/images')}}/{{ cours.coverImage }}" class="w-100" style="height: 48%;">
+                            {% endif %}
+                            <div class="card-body">
+                                <p class="card-title text-center mb-3">{{ cours.prix | number_format(3,',',' ') }}
+                                    DT</p>
+                                <a href="{{ path('admin_cours_show', {'slug': cours.slug}) }}" class="btn-pc">Voir cours</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="text-center">Aucun cours pour le moment</p>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

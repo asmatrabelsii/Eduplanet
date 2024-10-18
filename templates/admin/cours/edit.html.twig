@@ -1,0 +1,29 @@
+{% extends 'admin/base.html.twig' %}
+{% block title %}
+    Modification du cours numéro {{ cours.id }}
+{% endblock %}
+
+{% form_theme form 'cours/_collection.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+		<h1>Modifier le cours {{ cours.titre }}</h1>
+        <div class="container w-75">
+			{{ form_start(form) }}
+
+			{{ form_widget(form) }}
+			
+			<button type="submit" class="btn btn-primary">Modifier</button>
+
+			{{ form_end(form) }}
+		</div>
+
+	</div>
+
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/js/cours.js"></script>
+	<script src="/js/criteres.js"></script>
+{% endblock %}

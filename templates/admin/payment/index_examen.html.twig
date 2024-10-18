@@ -1,0 +1,39 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des paiements
+{% endblock %}
+
+{% block body %}
+	<div class="container-fluid" style="width:90%">
+		<h1 class="mt-5 mb-3 mx-4">Liste des achats des Examens</h1>
+		<table class="table table-hover">
+		{% include 'admin/partials/_search_data.html.twig' with {form: form} only %}
+			<thead>
+				<tr>
+					<th>Utilisateur</th>
+					<th>Cours</th>
+					<th>Prix</th>
+					<th>Date d'achat</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for payment in payments %}
+					<tr>
+						<td>
+							<img src="{{ asset('/uploads/avatars')}}/{{ payment.user.avatar }}" alt="Avatar de {{ payment.user.fullName }}" class="avatar avatar-micro me-1">
+							{{ payment.user.fullName }}
+						</td>
+						<td>{{ payment.examen.cours.titre }}</td>
+						<td>
+							<span class="badge bg-dark">{{ payment.prix | number_format(3,',',' ') }} TND</span>
+						</td>
+						<td>{{ payment.createdAt|date('d/m/Y') }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="navigation flex justify-center my-4">
+			{{ knp_pagination_render(payments) }}
+		</div>
+	</div>
+{% endblock %}

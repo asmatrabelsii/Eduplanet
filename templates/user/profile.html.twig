@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Profil de {{ utilisateur.fullName }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-3 text-center">
+                <img src="{{ asset('/uploads/avatars')}}/{{ utilisateur.avatar }}" alt="Avatar de {{ utilisateur.fullName }}" class="avatar mb-3">
+                <br>
+                <span class="badge bg-primary p-2">{{ utilisateur.cours | length }} cours</span>
+            </div>
+            <div class="col-9">
+                <h1>{{ utilisateur.fullName }}</h1>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <h6>Biographie :</h6>
+        <p>{{ utilisateur.biographie }}</p>
+        <hr>
+        <h2 class="text-center">Mes cours</h2>
+        {% if utilisateur.cours | length > 0 %}
+            <div class="row">
+                {% for cours in utilisateur.cours %}
+                    {% include 'cours/_cours.html.twig' %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-center">Aucun cours pour le moment</p>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+        {% endif %}
+    </div>
+{% endblock %}

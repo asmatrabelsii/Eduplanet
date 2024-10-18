@@ -1,0 +1,163 @@
+span.rating i {
+    color: goldenrod;
+}
+
+.avatar {
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+}
+
+.avatar-meduim {
+    max-width: 78px;
+    max-height: 78px;
+}
+
+.avatar-mini {
+    max-width: 30px;
+    max-height: 30px;
+}
+
+.avatar-micro {
+    max-width: 28px;
+    max-height: 28px;
+}
+
+.avatar-max {
+    max-width: 370px;
+    max-height: 370px;
+    border-radius: 50%;
+}
+
+.avatar-m {
+    max-width: 200px;
+    max-height: 200px;
+    border-radius: 50%;
+}
+
+.signup {
+    background-color: #3867ff;
+    color: #fff !important;
+    padding: 5px 10px;
+    border-radius: 0.375rem;
+    font-family: roboto !important;
+}
+
+.signup:hover {
+    background-color: #577cf7;
+}
+
+.navbar-nav li {
+    margin-left: 20px;
+}
+
+.searchsize {
+    width:350px !important;
+    margin-left: 25px;
+
+}
+.searchbtn {
+    background-color: #100545;
+    border: none;
+    color: #fff;
+    border-radius: 0.375rem 0.375rem;
+    padding: 5px 12px;
+    margin-left: 5px;
+}
+
+.searchbtn:hover {
+    background-color: #352295;
+}
+
+.logo {
+    width: 125px;
+    height: 31px;
+    margin-left: 15px;
+}
+
+.foot-logo {
+    width: 125px;
+    height: 31px;
+    margin-top: -50px;
+}
+
+.icons i {
+    margin: 12px 6px;
+    color: #3867ff;
+}
+
+div.container {
+    margin-top: 20px;
+    text-align: justify;
+}
+
+.myfooter,
+.myfooter h5 {
+    background-color: #100545;
+    color: #a2a0a0;
+}
+
+.conteneur {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.imgaccueil {
+    width: 400px;
+}
+
+.img-col {
+    flex-basis: 40%;
+}
+
+.nav-color {
+    background-color: #ffffff;
+}
+
+.btn-pc {
+    background-color: #3867ff;
+    color: #fff;
+    padding: 8px 10px;
+    font-family: 'Segoe UI';
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 22px;
+    text-transform: uppercase;
+    border-radius: 0.375rem;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.btn-pc:hover,
+.btn-pc:active {
+    background-color: #6488fe;
+    color: #fff;
+}
+
+.space {
+    margin-bottom: 30px;
+}
+
+.item-col {
+    color: #100545;
+    font-size: 15px;
+    line-height: 22px;
+    text-transform: uppercase;
+    text-align: -webkit-match-parent;
+    text-decoration: none;
+    font-family: roboto;
+    font-weight: bold;
+}
+
+.item-col:hover {
+    color: #4836a2;
+    text-transform: uppercase;
+    text-align: -webkit-match-parent;
+    text-decoration: none;
+}
+
+.search-bar {
+    border-radius: 0.375rem;
+    padding: 3px;
+}

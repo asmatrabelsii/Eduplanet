@@ -1,0 +1,35 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+	Quiz
+{% endblock %}
+
+{% block body %}
+	{% for quiz in quizz %}
+		<div class="container mt-5" style="width:60%">
+			<h1 class="my-3">quiz de
+				{{ quiz.cours.titre }}</h1>
+			<div class="row alert alert-info">
+				<div class="col">Nombre de questions :
+					{{ quiz.quizQuestions|length }}</div>
+			</div>
+			<div class="m-5">
+				{% for question in quiz.quizQuestions %}
+					<h6 class="border p-2">{{ question.enonce }}</h6>
+					<ul>
+						<li>
+							<strong>Réponse vraie:
+							</strong>
+							{{ question.choix1 }}</li>
+						<li>{{ question.choix2 }}</li>
+						<li>{{ question.choix3 }}</li>
+						<li>{{ question.choix4 }}</li>
+					</ul>
+				{% endfor %}
+			</div>
+		</div>
+		<div class="navigation flex justify-content-end my-4">
+			{{ knp_pagination_render(quizz) }}
+		</div>
+	{% endfor %}
+{% endblock %}

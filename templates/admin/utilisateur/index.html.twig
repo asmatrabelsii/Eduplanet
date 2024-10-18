@@ -1,0 +1,70 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des utilisateurs{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="width:90%">
+		<h1 class="mt-5 mb-3 mx-4">Gestion des utilisateurs</h1>
+		<div class="my-3 mx-4">
+			{% include 'admin/partials/_search_data.html.twig' with {form: form} only %}
+			<a href="{{ path('admin_utilisateur_new') }}" class="btn-pc">
+				<i class="fas fa-plus"></i>Ajouter un utilisateur
+			</a>
+		</div>
+		<table class="table table-hover text-center">
+			<thead>
+				<tr>
+					<th>Avatar</th>
+					<th>Nom</th>
+					<th>Prénom</th>
+					<th>Email</th>
+					<th>cin</th>
+					<th>Activé</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				{% for utilisateur in utilisateurs %}
+					<tr>
+						<td>
+							<img src="{{ asset('/uploads/avatars')}}/{{ utilisateur.avatar }}" alt="Avatar de {{ utilisateur.fullName }}" class="avatar avatar-micro me-1">
+						</td>
+						<td>{{ utilisateur.nom }}</td>
+						<td>{{ utilisateur.prenom }}</td>
+						<td>{{ utilisateur.email }}</td>
+						<td>{{ utilisateur.cin }}</td>
+						<td>
+							{% if utilisateur.isVerified %}
+								<a href="{{ path('admin_utilisateur_unverify', {'id': utilisateur.id}) }}" data-bs-toggle="modal" data-bs-target="#disapproveModal-{{ utilisateur.id }}">
+									<span class="badge bg-success p-2">Oui</span>
+								</a>
+								{% include 'admin/modals/disapproveUtilisateur.html' %}
+							{% else %}
+								<a href="{{ path('admin_utilisateur_verify', {'id': utilisateur.id}) }}" data-bs-toggle="modal" data-bs-target="#approveModal-{{ utilisateur.id }}">
+									<span class="badge bg-danger p-2">Non</span>
+								</a>
+                                {% include 'admin/modals/approveUtilisateur.html' %}
+							{% endif %}
+						</td>
+						<td>
+							<a href="{{ path('admin_utilisateur_show', {'id': utilisateur.id}) }}" class="btn btn-info">
+								<i class="fa-sharp fa-solid fa-eye"></i>
+							</a>
+							<a href="{{ path('admin_utilisateur_edit', {'id': utilisateur.id}) }}" class="btn btn-primary">
+								<i class="fa-sharp fa-solid fa-pen-to-square"></i>
+							</a>
+							<a href="{{ path('admin_utilisateur_delete', {'id': utilisateur.id}) }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ utilisateur.id }}">
+								<i class="fa-sharp fa-solid fa-trash-can"></i>
+							</a>
+                            {% include 'admin/modals/deleteUtilsateur.html' %}
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="navigation flex justify-center my-4">
+			{{ knp_pagination_render(utilisateurs) }}
+		</div>
+	</div>
+{% endblock %}

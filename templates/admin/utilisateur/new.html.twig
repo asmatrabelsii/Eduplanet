@@ -1,0 +1,17 @@
+{% extends "admin/base.html.twig" %}
+
+{% block title %}
+    Ajout d'un utilisateur
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Ajouter un utilisateur</h1>
+        <div class="container w-75">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-primary">Ajouter</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

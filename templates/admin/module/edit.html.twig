@@ -1,0 +1,20 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Editer le module{% endblock %}
+
+{% block body %}
+    <div class="container">
+		<h1>Modifier le module {{ module.libelle }}</h1>
+        <div class="container w-75" style="height:50vh;">
+
+			{{ form_start(form) }}
+
+			{{ form_widget(form) }}
+			
+			<button type="submit" class="btn btn-primary">Modifier</button>
+
+			{{ form_end(form) }}
+		</div>
+
+	</div>
+{% endblock %}

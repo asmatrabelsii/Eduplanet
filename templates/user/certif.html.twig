@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container border w-75 mt-5">
+        <h1 class="my-3 text-center">Mes certifications</h1>
+        {% if certifs|length == 0 %}
+            <div class="row">
+                <div class="col-2">
+                    <img src="/certif.png" class="w-75 h-100 pb-3"/>
+                </div>
+                <div class="col-10 alert alert-dark text-center" style="margin-top:15%; margin-bottom:20%">
+                    <h4 class="my-3">Vous n'avez aucune certification</h4>
+                </div>
+            </div>
+        {% else %}
+            <div class="row">
+                <div class="col-2">
+                    <img src="/certif.png" class="w-75 h-100 pb-3"/>
+                </div>
+                <div class="col-10">
+                    {% for certif in certifs %}
+                        <div class="row me-2 my-5 alert alert-info">
+                            <div class="col ms-5">
+                                Ma certification de {{ certif.exam.cours.titre }}
+                            </div>
+                            <div class="col">
+                                <a href="{{ path('certification_download', {'id': certif.id}) }}">PDF</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}

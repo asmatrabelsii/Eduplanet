@@ -1,0 +1,71 @@
+{% block _cours_modules_widget %}
+	<p>Ici, vous pouvez ajouter les modules de votre cours</p>
+	
+	{{ form_widget(form) }}
+
+	<input type="hidden" id="widgets-counter" value="0">
+		
+	<div class="form-group">
+		<button type="button" id="add-modules" class="btn btn-primary">Ajouter un module</button>
+	</div>
+{% endblock %}
+
+{% block _cours_modules_entry_row %}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _cours_modules_entry_widget %}
+	<div class="form-group" id="block_{{id}}">
+		<div class="row">
+			<div class="col-10">
+				<div class="row">
+					<div class="col">
+						{{ form_widget(form.libelle) }}
+						{{ form_errors(form.libelle) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.description) }}
+						{{ form_errors(form.description) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.contenu) }}
+						{{ form_errors(form.contenu) }}
+					</div>
+				</div>
+			</div>
+			<div class="col-2">
+				<button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{id}}">X</button>
+			</div>	
+		</div>
+	</div>
+{% endblock %}
+
+{% block _cours_criteres_widget %}
+	<p>Ici, vous pouvez ajouter les critères nécessaires de votre cours</p>
+	
+	{{ form_widget(form) }}
+
+	<input type="hidden" id="widget-counter" value="0">
+		
+	<div class="form-group">
+		<button type="button" id="add-criteres" class="btn btn-primary">Ajouter un critère</button>
+	</div>
+{% endblock %}
+
+{% block _cours_criteres_entry_row %}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _cours_criteres_entry_widget %}
+	<div class="form-group" id="block_{{id}}">
+		<div class="row mb-2">
+			<div class="col-10">
+				{{ form_widget(form.libelle) }}
+				{{ form_errors(form.libelle) }}
+			</div>
+			<div class="col-2">
+				<button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{id}}">X</button>
+			</div>	
+		</div>
+	</div>
+{% endblock %}

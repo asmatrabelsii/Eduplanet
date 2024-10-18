@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row" style="background-color: white; width:80%; margin-left: 10%">
+            <div class="row">
+                <div class="col-9">
+                    <h1 class="my-3 ms-4">Examen</h1>
+                </div>
+                <div class="col-3 mt-2 alert alert-info">
+                    <p>Temps restant: <span id="timer">{{ time }}:00</span></p>
+                </div>
+            </div>
+            <hr>
+            <form id="exam_form" method="post">
+                <div class="ms-4">
+                    {{ form_widget(form) }}
+                    {{ form_errors(form) }}
+                    <button type="submit" id="submit_button" class="btn btn-primary">Valider les réponses</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var timeleft = {{ time }} * 60;
+        var downloadTimer = setInterval(function(){
+            timeleft--;
+            document.getElementById("timer").textContent = Math.floor(timeleft/60) + ":" + timeleft%60;
+            if(timeleft <= 0) {
+                clearInterval(downloadTimer);
+                window.location.href = "{{ path('Exam_expired') }}";
+            }
+        }, 1000);
+    </script>
+{% endblock %}

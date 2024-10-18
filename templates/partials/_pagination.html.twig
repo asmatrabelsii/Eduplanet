@@ -1,0 +1,29 @@
+{% if pageCount > 1 %}
+    <div class="d-flex justify-content-center">
+        <ul class="pagination">
+            {% if previous is defined %}
+                <li class="page-item {% if first is defined and current == first %}disabled{% endif %}">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">&laquo;</a>
+                </li>
+            {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">&laquo;</a>
+                </li>
+            {% endif %}
+            {% for page in pagesInRange %}
+                <li class="page-item {% if page == current %}active{% endif %}">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): page})) }}">{{ page }}</a>
+                </li>
+            {% endfor %}
+            {% if next is defined %}
+                <li class="page-item {% if last is defined and current == last %}disabled{% endif %}">
+                    <a class="page-link" href="{{ path(route, query|merge({(pageParameterName): next}))}}">&raquo;</a>
+                </li>
+            {% else %} 
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">&raquo;</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+{% endif %}

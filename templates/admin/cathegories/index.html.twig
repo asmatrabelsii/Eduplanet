@@ -1,0 +1,40 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Administration des catégories{% endblock %}
+
+{% block body %}
+    <div class="container-fluid" style="width:90%">
+        <h1 class="mt-5 mb-3 mx-4">Gestion des catégories</h1>
+        <a href="{{ path('admin_cathegories_new') }}" class="btn-pc my-3 mx-4">
+            <i class="fas fa-plus"></i>Ajouter une catégorie
+        </a>
+        <div class="row justify-content-center">
+            <div class="col">
+                <table class="table mt-4">
+                    <thead>
+                        <tr>
+                            <th>Libelle</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for categorie in categories %}
+                            <tr>
+                                <td>{{ categorie.libelle }}</td>
+                                <td>
+                                    <a href="{{ path('admin_cathegories_edit', {'id': categorie.id}) }}" class="btn btn-primary">
+                                        <i class="fa-sharp fa-solid fa-pen-to-square"></i>
+                                    </a>
+                                    <a href="{{ path('admin_cathegories_delete', {'id': categorie.id}) }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ categorie.id }}">
+                                        <i class="fa-sharp fa-solid fa-trash"></i>
+                                    </a>
+							        {% include 'admin/modals/deleteCategorie.html' %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Paiement avec succés
+{% endblock %}
+
+{% block body %}
+  <div class="container my-5">
+    <h2>Le cours est acheté!</h2>
+    <p>
+      C'est un plaisir de vous servir! Si vous avez des questions, n'hesitez pas à nous écrire.
+      <a href="mailto:formation.hedyl@yahoo.com" target="_blank">formation.hedyl@yahoo.com <i class="fa-sharp fa-solid fa-envelope"></i></a>.
+    </p>
+    <p>Voulez-vous accédez à vos cours achetés? <a href="{{path('mes_cours', {'id':app.user.id})}}">Cours</a><br>
+    <a href="/" class="retour">Retour</a>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+  </div>
+{% endblock %}

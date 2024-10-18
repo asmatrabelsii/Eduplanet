@@ -1,0 +1,20 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+    Modification de {{ categorie.libelle }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+		<h1 class="my-5 mx-4">Modification de {{ categorie.libelle }}</h1>
+        <div class="container w-50" style="height:50vh;">
+            {{ form_start(form) }}
+
+            {{ form_widget(form) }}
+
+            <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

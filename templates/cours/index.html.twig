@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cours{% endblock %}
+
+{% block body %}
+	<div style="width:100%; padding:20px">
+		<h1 class="mb-4 mt-2 ms-4">Liste des cours</h1>
+		<div class="row">
+			<div class="col-4" style="border-right:1px solid #C0C0C0;">
+				<h4 class="ms-4 mt-5">Rechercher: </h4>
+				{% include 'partials/_search_data.html.twig' with {form: form} only %}
+				<hr>
+				{% include 'partials/_dropdown.html.twig' with {options: allCathegories} only %}
+			</div>
+			<div class="col-8">
+				<div class="d-flex flex-row flex-wrap justify-content-center">
+					{% if courses is not empty %}
+						{% for cours in courses %}
+							{% include 'cours/_cours.html.twig' %}
+						{% endfor %}
+					{% else %}
+						<div class="container text-center mt-5">
+							Aucun cours n'a été trouvé.
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<br>
+						</div>
+					{% endif %}
+				</div>
+				{% if courses is not empty %}
+					<div class="navigation flex justify-center my-4">
+							{{ knp_pagination_render(courses) }}
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}

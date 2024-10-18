@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'examen
+{% endblock %}
+
+{% form_theme form 'examen/_collection.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<h1 class="my-3">Modifier l'examen</h1>
+		<div class="container w-75">
+			{{ form_start(form) }}
+
+			{{ form_widget(form) }}
+
+			<button type="submit" class="btn btn-primary">Modifier</button>
+
+			{{ form_end(form) }}
+		</div>
+
+	</div>
+{% endblock %}
+
+{% block javascripts %}
+	<script src="/js/examen.js"></script>
+{% endblock %}

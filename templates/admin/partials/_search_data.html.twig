@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+<div class="d-flex justify-content-center">
+    <div class="mb-3 xl:w-96">
+        <div class="input-group relative flex flex-wrap items-stretch w-full mb-4">
+            {{ form_widget(form.q) }}
+            <button class="searchbtn" type="submit">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}

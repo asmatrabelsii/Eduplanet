@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Connexion à l'administration</title>
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<script src="https://kit.fontawesome.com/2c3c6d7e26.js" crossorigin="anonymous"></script>
+
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                height: 100vh;
+            }
+            .card {
+                margin-top: 10%;
+            }
+        </style>
+	</head>
+	<body>
+        <div class="col-md-4">
+            <div class="card bg-light">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        <i class="fas fa-user"></i>
+                        Connexion à l'administration
+                    </h4>
+                </div>
+                <div class="card-body py-3">
+                    {% if hasError %}
+                        <div class="alert alert-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Une erreur est survenue, l'email' ou le mot de passe est invalide</p>
+                        </div>
+                    {% endif %}
+                    <form method="post">
+                        <div class="form-group"><label for="_username">Email</label><input type="text" class="form-control my-2" placeholder="Adresse email" name="_username" value="{{ username }}"></input></div>
+                        <div class="form-group"><label for="_password">Mot de passe</label><input type="password" class="form-control my-2" placeholder="Mot de passe" name="_password"></input></div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary my-2">
+                                <i class="fas fa-sign-in-alt"></i>
+                                Connexion
+                            </button>
+                            <a href="/" class="btn btn-secondary my-2 mx-2">
+                                <i class="fas fa-home"></i>
+                                Retour à l'accueil
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

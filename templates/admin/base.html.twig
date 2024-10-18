@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			Eduplanet - {% block title %}Bienvenue{% endblock %}
+		</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+
+		<link rel="stylesheet" href="/css/app.css">
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/bootstrap.css">
+		<link rel="icon" href="/icon.png"> 
+		{% block stylesheets %}{% endblock %}
+	</head>
+
+	<body class="bg-light">
+		
+		{% include "admin/partials/header.html.twig" %}
+
+		{% block body %}{% endblock %}
+
+		{% include "admin/partials/footer.html.twig" %}
+
+		<script src="/js/jquery.min.js"></script>
+		<script src="/js/popper.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="https://kit.fontawesome.com/2c3c6d7e26.js" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.3/umd/popper.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/js/bootstrap.min.js"></script>
+		{% block javascripts %}{% endblock %}
+	</body>
+</html>

@@ -1,0 +1,10 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        app_environement: '%env(APP_ENV)%'
+        stripe_publickey: '%env(STRIPE_PUBLICKEY)%'
+    form_themes: ['bootstrap_5_layout.html.twig']
+
+when@test:
+    twig:
+        strict_variables: true

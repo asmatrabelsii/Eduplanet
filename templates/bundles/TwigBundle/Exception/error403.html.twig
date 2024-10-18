@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Interdit{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <br>
+                <br>
+                <br>
+                <h1>Alors, Vous essayez de bousiller le site ?!</h1>
+                <div class="alert alert-danger">
+                    <p>Vous n'avez pas le droit d'accéder à cette ressource.</p>
+                </div>
+                <a href="{{ path('homepage') }}" class="btn-pc">Retour à l'accueil</a>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+            </div>
+        </div>
+    </div>
+{% endblock %}

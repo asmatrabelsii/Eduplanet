@@ -1,0 +1,53 @@
+{% block _examen_questions_widget %}
+	<p>Ici, vous pouvez ajouter les questions de votre examen</p>
+	
+	{{ form_widget(form) }}
+
+	<input type="hidden" id="widgets-counter" value="0">
+		
+	<div class="form-group">
+		<button type="button" id="add-questions" class="btn btn-primary">Ajouter une question</button>
+	</div>
+{% endblock %}
+
+{% block _examen_questions_entry_row %}
+	{{ form_widget(form) }}
+{% endblock %}
+
+{% block _examen_questions_entry_widget %}
+	<div class="form-group" id="block_{{id}}">
+		<div class="row">
+			<div class="col-10">
+				<div class="row mb-2">
+					<div class="colspan=2">
+						{{ form_widget(form.enonce) }}
+						{{ form_errors(form.enonce) }}
+					</div>
+                </div>
+                <div class="row mb-2">
+					<div class="col">
+						{{ form_widget(form.choix1) }}
+						{{ form_errors(form.choix1) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.choix2) }}
+                        {{ form_errors(form.choix2) }}
+					</div>
+                </div>
+                <div class="row mb-2">
+					<div class="col">
+						{{ form_widget(form.choix3) }}
+                        {{ form_errors(form.choix3) }}
+					</div>
+					<div class="col">
+						{{ form_widget(form.choix4) }}
+                        {{ form_errors(form.choix4) }}
+					</div>
+				</div>
+			</div>
+			<div class="col-2">
+				<button type="button" class="btn btn-danger" data-action="delete" data-target="#block_{{id}}">X</button>
+			</div>	
+		</div>
+	</div>
+{% endblock %}

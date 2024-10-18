@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="my-3">Quiz</h1>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_errors(form) }}
+        <button type="submit" class="btn btn-primary">Valider les réponses</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

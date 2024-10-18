@@ -1,0 +1,169 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+	{{ cours.titre }}
+{% endblock %}
+
+{% block body %}
+	<div class="container p-2 mb-4">
+		<h1 class="mb-3">{{ cours.titre }}</h1>
+		<a href="{{ path('admin_cours_edit', {'slug': cours.slug}) }}" class="btn-pc">Modifier ce cours</a>
+		<a href="{{ path('admin_cours_delete', {'slug': cours.slug}) }}" class="btn-pc" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ cours.slug }}">Supprimer ce cours</a>
+		{% include 'admin/modals/delete.html' %}
+		<div class="row mt-5">
+			<div class="col-12 col-md-6">
+				{% if cours.mimeType == 'video/mp4' %}
+					<video src="{{ asset('/uploads/images')}}/{{ cours.coverImage }}" controls autoplay class="ratio ratio-16x9"></video>
+				{% elseif cours.mimeType == 'image/jpeg' or cours.mimeType == 'image/png' %}
+					<img src="{{ asset('/uploads/images')}}/{{ cours.coverImage }}" class="h-75 w-75">
+				{% endif %}
+			</div>
+			<div class="col-12 col-md-6">
+				<h6>Description:</h6>
+				<p>{{ cours.description }}</p>
+				<h6>Prix:</h6>
+				<p>{{ cours.prix | number_format(3,',',' ') }}
+					DT</p>
+				<h6>Catégorie:</h6>
+				<p>{{ cours.cathegorie }}</p>
+				<h6>Auteur:</h6>
+				<p>{{ cours.auteur.fullName }}</p>
+				{% if cours.criteres|length > 0 %}
+					<h6>Critères:</h6>
+					{% for critere in cours.criteres %}
+						<li>{{ critere.libelle }}</li>
+					{% endfor %}
+				{% endif %}
+				<h6>Nombre de commentaires:</h6>
+				<p>{{ cours.commentaires | length }}
+					commentaires</p>
+				<h6>Note moyenne:</h6>
+				<p>{{ cours.avgRatings }}/5</p>
+				<h3>Examen:</h3>
+				{% if cours.examen is not empty %}
+					<a href="{{ path('admin_examen_index', {slug: cours.slug}) }}" class="text-dark">Examen de
+						{{ cours.titre }}</a>&nbsp;&nbsp;&nbsp;
+					<a href="{{path('admin_examen_edit', {slug:cours.slug, id: cours.examen.id}) }}">
+						<i class="fa-sharp fa-solid fa-pen-to-square"></i>
+					</a>
+					<a href="{{path('admin_examen_delete', {slug:cours.slug, id: cours.examen.id}) }}" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ cours.examen.id }}">
+						<i class="fa-sharp fa-solid fa-trash-can text-danger"></i>
+					</a>
+					{% include 'admin/modals/deleteExamen.html' %}
+				{% else %}
+					<p class="text-center">Aucun examen pour le moment</p>
+					<div class="container text-center">
+						<a href="{{ path('admin_examen_new', {slug: cours.slug}) }}" class="btn-pc">
+							<i class="fas fa-plus"></i>
+						</a>
+					</div>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-12 col-md-6">
+				<h3>Modules</h3>
+				{% if cours.modules|length > 0 %}
+					{% for module in cours.modules %}
+						<div class="card mb-3">
+							<div class="card-body">
+								<h5 class="card-title">{{ module.libelle }}</h5>
+								<p class="card-text">{{ module.description }}</p>
+								<a href="{{ path('admin_module_edit', {'id': module.id, 'slug': cours.slug}) }}" class="btn btn-primary">
+									<i class="fa-sharp fa-solid fa-pen-to-square"></i>
+								</a>
+								<a href="{{ path('admin_module_delete', {'id': module.id, 'slug': cours.slug}) }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ module.id }}">
+									<i class="fa-sharp fa-solid fa-trash-can"></i>
+								</a>
+								{% include 'admin/modals/deleteModule.html' %}
+								{% if module.approved %}
+									<a href="{{ path('admin_module_disapprove', {'id': module.id, 'slug': cours.slug}) }}" data-bs-toggle="modal" data-bs-target="#disapproveModal-{{ module.id }}">
+										<span class="badge bg-success p-2">Approuvé</span>
+									</a>
+									{% include 'admin/modals/disapproveModule.html' %}
+								{% else %}
+									<a href="{{ path('admin_module_approve', {'id': module.id, 'slug': cours.slug}) }}" data-bs-toggle="modal" data-bs-target="#approveModal-{{ module.id }}">
+										<span class="badge bg-danger p-2">Disapprouvé</span>
+									</a>
+									{% include 'admin/modals/approveModule.html' %}
+								{% endif %}
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<p class="text-center">Aucun module pour le moment</p>
+				{% endif %}
+				<div class="container text-center">
+					<a href="{{ path('admin_module_new', {'slug': cours.slug}) }}" class="btn-pc">
+						<i class="fas fa-plus"></i>
+					</a>&nbsp;
+					<a href="{{ path('admin_module_index', {'slug': cours.slug}) }}" class="btn-pc">
+						<i class="fa-sharp fa-solid fa-eye"></i>
+					</a>
+				</div>
+			</div>
+			<div class="col-12 col-md-6">
+				<h3>Commentaires</h3>
+				{% if cours.commentaires|length > 0 %}
+					{% for commentaire in cours.commentaires %}
+						<div class="card mb-3">
+							<div class="card-body">
+								<h5 class="card-title">{{ commentaire.auteur.fullName }}</h5>
+								<p class="card-text">{{ commentaire.contenu }}</p>
+								<p class="card-text">
+									<small class="text-muted">Note:
+										{{ commentaire.rating }}/5</small>
+								</p>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<p class="text-center">Aucun commentaire pour le moment</p>
+				{% endif %}
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-12 col-md-6">
+				<h3>Quiz</h3>
+				{% if cours.quizz|length > 0 %}
+					{% for quiz in cours.quizz %}
+						<div class="card mb-3">
+							<div class="card-body">
+								<h5 class="card-title">Quiz</h5>
+								<p class="card-text">{{ quiz.quizQuestions|length }} questions</p>
+								<a href="{{ path('admin_quiz_edit', {'id': quiz.id, 'slug': cours.slug}) }}" class="btn btn-primary">
+									<i class="fa-sharp fa-solid fa-pen-to-square"></i>
+								</a>
+								<a href="{{ path('admin_quiz_delete', {'id': quiz.id, 'slug': cours.slug}) }}" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ quiz.id }}">
+									<i class="fa-sharp fa-solid fa-trash-can"></i>
+								</a>
+								{% include 'admin/modals/deleteQuiz.html' %}
+								{% if quiz.approved %}
+									<a href="{{ path('admin_quiz_disapprove', {'id': quiz.id, 'slug': cours.slug}) }}" data-bs-toggle="modal" data-bs-target="#disapproveModal-{{ quiz.id }}">
+										<span class="badge bg-success p-2">Approuvé</span>
+									</a>
+									{% include 'admin/modals/disapproveQuiz.html' %}
+								{% else %}
+									<a href="{{ path('admin_quiz_approve', {'id': quiz.id, 'slug': cours.slug}) }}" data-bs-toggle="modal" data-bs-target="#approveModal-{{ quiz.id }}">
+										<span class="badge bg-danger p-2">Disapprouvé</span>
+									</a>
+									{% include 'admin/modals/approveQuiz.html' %}
+								{% endif %}
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<p class="text-center">Aucun quiz pour le moment</p>
+				{% endif %}
+				<div class="container text-center">
+					<a href="{{ path('admin_quiz_new', {'slug': cours.slug}) }}" class="btn-pc">
+						<i class="fas fa-plus"></i>
+					</a>&nbsp;
+					<a href="{{ path('admin_quiz_index', {'slug': cours.slug}) }}" class="btn-pc">
+						<i class="fa-sharp fa-solid fa-eye"></i>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

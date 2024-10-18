@@ -1,0 +1,67 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}
+	{{ utilisateur.fullName }}
+{% endblock %}
+
+{% block body %}
+	<div class="container p-2 mb-4">
+		<h1 class="mb-3">{{ utilisateur.fullName }}</h1>
+		<div class="row mt-5">
+			<div class="col-12 col-md-6">
+				<img src="{{ asset('/uploads/avatars')}}/{{ utilisateur.avatar }}" alt="Avatar de {{ utilisateur.fullName }}" class="avatar-max">
+			</div>
+			<div class="col-12 col-md-6">
+				<h6>Nom:</h6>
+				<p>{{ utilisateur.nom }}</p>
+				<h6>Prénom:</h6>
+				<p>{{ utilisateur.prenom }}</p>
+				<h6>CIN:</h6>
+				<p>{{ utilisateur.cin }}</p>
+				<h6>Email:</h6>
+				<p>{{ utilisateur.email }}</p>
+				<h6>Biographie :</h6>
+				<p>{{ utilisateur.biographie }}</p>
+				<h6>Nombre de cours:</h6>
+				<p>{{ utilisateur.cours | length }}
+					cours</p>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-12 col-md-6">
+				<h3>Cours</h3>
+				{% if utilisateur.cours|length > 0 %}
+					{% for cours in utilisateur.cours %}
+						<div class="card mb-3">
+							<div class="card-body">
+								<h5 class="card-title">{{ cours.titre }}</h5>
+								<p class="card-text">{{ cours.description }}</p>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<p class="text-center">Aucun cours pour le moment</p>
+				{% endif %}
+			</div>
+			<div class="col-12 col-md-6">
+				<h3>Commentaires</h3>
+				{% if utilisateur.commentaires|length > 0 %}
+					{% for commentaire in utilisateur.commentaires %}
+						<div class="card mb-3">
+							<div class="card-body">
+								<h5 class="card-title">{{ commentaire.contenu }}</h5>
+								<p class="card-text">{{ commentaire.cours.titre }}</p>
+								<p class="card-text">
+									<small class="text-muted">Note:
+										{{ commentaire.rating }}/5</small>
+								</p>
+							</div>
+						</div>
+					{% endfor %}
+				{% else %}
+					<p class="text-center">Aucun commentaire pour le moment</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+{% endblock %}
